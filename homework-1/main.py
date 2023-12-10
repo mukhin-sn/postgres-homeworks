@@ -14,7 +14,7 @@ def csv_file_reader(file_name: str) -> list:
         # Читаем данные из файла
         data = csv.DictReader(data_file)
 
-        # Читаем имена столбцев таблицы
+        # Читаем имена столбцов таблицы
         data_field = data.fieldnames
 
         # Формируем выходной список для записи в базу данных
