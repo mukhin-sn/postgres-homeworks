@@ -15,7 +15,6 @@ WHERE SHIP_COUNTRY like 'P%'
 ORDER BY FREIGHT DESC
 LIMIT 10
 
-
 -- 3. фамилию, имя и телефон сотрудников, у которых в данных отсутствует регион (см таблицу employees)
 SELECT FIRST_NAME,
 	LAST_NAME,
@@ -31,9 +30,26 @@ GROUP BY COUNTRY
 ORDER BY COUNT(*) DESC
 
 -- 5. суммарный вес заказов (в которых известен регион) по странам, но вывести только те результаты, где суммарный вес на страну больше 2750. Отсортировать по убыванию суммарного веса (см таблицу orders, колонки ship_region, ship_country, freight)
-
+SELECT SHIP_COUNTRY,
+	SUM(FREIGHT)
+FROM ORDERS
+WHERE SHIP_REGION IS NOT NULL
+GROUP BY SHIP_COUNTRY
+HAVING SUM(FREIGHT) > 2750
+ORDER BY SUM(FREIGHT) DESC
 
 -- 6. страны, в которых зарегистрированы и заказчики (customers) и поставщики (suppliers) и работники (employees).
-
+SELECT COUNTRY
+FROM CUSTOMERS INTERSECT
+SELECT COUNTRY
+FROM SUPPLIERS INTERSECT
+SELECT COUNTRY
+FROM EMPLOYEES
 
 -- 7. страны, в которых зарегистрированы и заказчики (customers) и поставщики (suppliers), но не зарегистрированы работники (employees).
+SELECT COUNTRY
+FROM CUSTOMERS INTERSECT
+SELECT COUNTRY
+FROM SUPPLIERS EXCEPT
+SELECT COUNTRY
+FROM EMPLOYEES
