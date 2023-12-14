@@ -36,8 +36,9 @@ ORDER BY COMPANY_NAME
 
 -- 4. уникальные названия продуктов, которых заказано ровно 10 единиц (количество заказанных единиц см в колонке quantity табл order_details)
 -- Этот запрос написать именно с использованием подзапроса.
-select distinct product_name
-from products
-inner join order_details using(product_id)
-where quantity = 10
-order by product_name
+SELECT DISTINCT PRODUCT_NAME
+FROM PRODUCTS
+WHERE EXISTS (SELECT * FROM ORDER_DETAILS
+			  WHERE PRODUCTS.PRODUCT_ID = ORDER_DETAILS.PRODUCT_ID
+			  AND ORDER_DETAILS.QUANTITY = 10)
+ORDER BY PRODUCT_NAME
